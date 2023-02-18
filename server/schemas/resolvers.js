@@ -14,29 +14,54 @@ const resolvers = {
 
   Mutation: {
     login: async (parent, { email, password }) => {
-      const profile = await User.findOne({ email });
+      const user = await User.findOne({ email });
 
-      if (!profile) {
+      if (!user) {
         throw new AuthenticationError("No profile with this email found!");
       }
 
-      const correctPw = await profile.isCorrectPassword(password);
+      const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
         throw new AuthenticationError("Incorrect password");
       }
 
-      const token = signToken(profile);
-      return { token, profile };
+      const token = signToken(user);
+      return { token, user };
     },
 
-    addUser: async (parent, { name, email, password }) => {
-      const profile = await User.create({ name, email, password });
-      const token = signToken(profile);
+    addUser: async (parent, { username, email, password }) => {
+      const user = await User.create({ username, email, password });
+      const token = signToken(user);
 
-      return { token, profile };
+      return { token, user };
     },
 
-    saveBook: async (_, { bookInput }) => { },
+    saveBook: async (_, { bookInput }, context) => {
+      if (context.user) {
+        return User.findOneAndUpdate(
+          { _id: context.user._id },
+          {
+            $addToSet: { savedBooks: bookInput },
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+      }
+      throw new AuthenticationError("You need to be logged in");
+    },
+
+    removeBook: async (parent, { bookId }, context) => {
+      if (context.user) {
+        return User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { savedBooks: bookId } },
+          { new: true }
+        );
+      }
+      throw new AuthenticationError("You need to be logged in");
+    },
   },
 };
