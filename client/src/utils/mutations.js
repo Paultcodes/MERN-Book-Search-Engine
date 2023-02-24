@@ -29,6 +29,14 @@ export const SAVE_BOOK = gql`
     saveBook(bookInput: $bookData) {
       _id
       username
+      savedBooks {
+        authors
+        description
+        bookId
+        image
+        link
+        title
+      }
     }
   }
 `;
