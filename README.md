@@ -3,14 +3,14 @@
 This project is a React-based web application that uses Apollo Server to manage GraphQL queries and mutations for fetching and modifying data. The application replaces an existing RESTful API with the more performant GraphQL API, providing a more scalable and responsive user experience.
 
 
-The application includes the following features:
+""The application includes the following features:""
 
 
-*GraphQL API with Apollo Server
-*Authentication middleware
-*Apollo Provider for communicating with the server
-*Deployment to Heroku with MongoDB Atlas
-*React
+* GraphQL API with Apollo Server
+* Authentication middleware
+* Apollo Provider for communicating with the server
+* Deployment to Heroku with MongoDB Atlas
+* React
 
 ## Installation
 
