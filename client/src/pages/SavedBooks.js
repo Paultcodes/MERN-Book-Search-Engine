@@ -15,14 +15,12 @@ import { GET_ME } from '../utils/queries';
 
 import { REMOVE_BOOK } from '../utils/mutations';
 
-import { Navigate } from 'react-router-dom';
-
 import Auth from '../utils/auth';
 
 import { removeBookId } from '../utils/localStorage';
 
-const SavedBooks = () => {
-  const { loading, data } = useQuery(GET_ME);
+const SavedBooks = (props) => {
+  const { loading, data, refetch } = useQuery(GET_ME);
 
   const userData = data?.me || [];
 
@@ -42,7 +40,7 @@ const SavedBooks = () => {
       });
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
-      window.location.assign('/saved')
+      refetch();
     } catch (err) {
       console.error(err);
     }
