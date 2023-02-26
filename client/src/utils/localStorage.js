@@ -28,7 +28,6 @@ export const removeBookId = (bookId) => {
   );
   localStorage.setItem("saved_books", JSON.stringify(updatedSavedBookIds));
 
-  window.location.assign('/saved')
 
   return true;
 };
