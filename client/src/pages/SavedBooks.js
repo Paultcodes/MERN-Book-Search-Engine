@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import {
   Jumbotron,
   Container,
@@ -19,7 +18,7 @@ import Auth from '../utils/auth';
 
 import { removeBookId } from '../utils/localStorage';
 
-const SavedBooks = (props) => {
+const SavedBooks = () => {
   const { loading, data, refetch } = useQuery(GET_ME);
 
   const userData = data?.me || [];
